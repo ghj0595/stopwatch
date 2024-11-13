@@ -11,6 +11,12 @@ public class Stopwatch extends Thread {
 
 	private static Stopwatch instance = new Stopwatch();
 
+	public boolean isRun = true;
+	private String message;
+	private int count;
+	private int minute = count / 60;
+	private int result = count - (minute * 60);
+
 	public static Stopwatch getInstance() {
 		return instance;
 	}
@@ -21,18 +27,40 @@ public class Stopwatch extends Thread {
 
 	@Override
 	public void run() {
-		while (true) {
-			Calendar cal = Calendar.getInstance();
-			buffer.append(sdf.format(cal.getTime()));
-			try {
-				writer.append(buffer);
-				writer.flush();
-				buffer.delete(0, buffer.length());
-				writer.append("\n");
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+		printMenu();
+		while (isRun) {
+			play();
 			sleep();
+		}
+		printResult();
+	}
+
+	private void printMenu() {
+		System.out.println("[q] STOP");
+		System.out.println("[w] HOLD");
+		System.out.println("[e] RERUN");
+	}
+
+	private void play() {
+		Calendar cal = Calendar.getInstance();
+		buffer.append(sdf.format(cal.getTime()));
+		message = String.format(" [%d sec]\n", ++count);
+		buffer.append(message);
+		try {
+			writer.append(buffer);
+			writer.flush();
+			buffer.delete(0, buffer.length());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void printResult() {
+		message = String.format(">>> %d분 %d초 소요됨", minute, result);
+		buffer.append(message);
+		try {
+			writer.append(buffer);
+		} catch (Exception e) {
 		}
 	}
 
@@ -40,7 +68,6 @@ public class Stopwatch extends Thread {
 		try {
 			Thread.sleep(900);
 		} catch (Exception e) {
-			// TODO: handle exception
 		}
 	}
 
