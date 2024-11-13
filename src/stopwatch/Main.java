@@ -6,13 +6,6 @@ public class Main {
 		
 		Stopwatch stopwatch = Stopwatch.getInstance();
 		stopwatch.start();
-	
-		Input input = Input.getInstance();
-		input.start();
-		
-		
-		
-		
 
 	}
 

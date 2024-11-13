@@ -10,8 +10,7 @@ public class Input extends Thread {
 	private static Input instance = new Input();
 	
 	public static Input getInstance() {
-		return instance;
-		
+		return instance;		
 	}
 	
 	BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -23,9 +22,11 @@ public class Input extends Thread {
 				String input = reader.readLine();
 				
 				if(input.equals("q")) {
-					stopwatch.isRun = false;				
+					stopwatch.interrupt();	
+				} else if(input.equals("w")) {
+					stopwatch.isRun = false;					
 				} else if(input.equals("e")) {
-					
+					stopwatch.reRun();								
 				}
 			} catch (IOException e) {
 				e.printStackTrace();

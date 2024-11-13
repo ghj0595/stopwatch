@@ -24,13 +24,20 @@ public class Stopwatch extends Thread {
 	private SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
 
 	@Override
-	public void run() {
+	public void run() {		
+		Input input = Input.getInstance();
+		input.start();	
+		
 		printMenu();
 		while (isRun) {
-			play();
-			sleep();
-		}
-		printResult();
+			try {
+				play();
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {				
+				printResult();
+				break;
+			}
+		}	
 	}
 
 	private void printMenu() {
@@ -65,11 +72,9 @@ public class Stopwatch extends Thread {
 		}
 	}
 
-	private void sleep() {
-		try {
-			Thread.sleep(900);
-		} catch (Exception e) {
-		}
+	public void reRun() {
+		isRun = true;
 	}
+
 
 }
