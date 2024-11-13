@@ -14,8 +14,6 @@ public class Stopwatch extends Thread {
 	public boolean isRun = true;
 	private String message;
 	private int count;
-	private int minute = count / 60;
-	private int result = count - (minute * 60);
 
 	public static Stopwatch getInstance() {
 		return instance;
@@ -55,11 +53,14 @@ public class Stopwatch extends Thread {
 		}
 	}
 
-	private void printResult() {
-		message = String.format(">>> %d분 %d초 소요됨", minute, result);
-		buffer.append(message);
+	public void printResult() {
+		int minute = count / 60;
+		int result = count - (minute * 60);
+		String info = String.format(">>> %d분 %d초 소요됨", minute, result);
+		buffer.append(info);
 		try {
 			writer.append(buffer);
+			writer.flush();
 		} catch (Exception e) {
 		}
 	}

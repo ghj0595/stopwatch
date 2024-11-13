@@ -23,7 +23,7 @@ public class Input extends Thread {
 				String input = reader.readLine();
 				
 				if(input.equals("q")) {
-					stopwatch.isRun = false;
+					stopwatch.isRun = false;				
 				} else if(input.equals("e")) {
 					
 				}
